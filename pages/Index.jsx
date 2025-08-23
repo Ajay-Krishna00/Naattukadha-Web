@@ -1,88 +1,100 @@
 "use client";
-import { Link } from "react-router-dom";
 
-import { Camera, MapPin, Music, ArrowRight } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Menu, X } from "lucide-react";
 
-const Index = () => {
+const bgimages = [ { src: "kathakali.jpg", }, { src: "houseboat.jpg", }, { src: "temple.jpg", }, { src: "padyani.jpg", }, ];
+
+export default function HomePage() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % bgimages.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <div className="min-h-screen bg-gradient-subtle">
-      {/* Hero Section */}
-      <div className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
-        <div className="container mx-auto max-w-4xl text-center">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
-            Discover Kerala's
-            <span className="block bg-gradient-kerala bg-clip-text text-transparent">
-              Cultural Heritage
-            </span>
-          </h1>
-          
-          <p className="text-lg sm:text-xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed">
-            Experience the rich traditions, taste authentic flavors, and listen to timeless melodies 
-            of God's Own Country through immersive AR and curated content.
-          </p>
+    <div className="flex flex-col h-screen">
+      {/* Navigation */}
+      <nav className="relative bg-white/90 backdrop-blur-md shadow-sm border-b border-green-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            {/* Logo */}
+            <div className="flex-shrink-0">
+              <h1 className="text-xl font-bold text-green-800 tracking-wide">
+                NATTUKADHA AR
+              </h1>
+            </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-            <Link to="/ar">
-              <button size="lg" className="bg-gradient-primary shadow-soft hover:shadow-card transition-all duration-300 group">
-                <Camera className="mr-2 h-5 w-5 group-hover:rotate-12 transition-transform" />
-                Start AR Experience
-                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            {/* Desktop Navigation */}
+            <div>
+              <button className="bg-green-700 hover:bg-green-800 text-white px-6 py-2 rounded-full transition-colors duration-200 font-medium">
+                Sign In
               </button>
-            </Link>
+            </div>
+
+            {/* Mobile menu button */}
+            <div className="md:hidden">
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="text-green-700 hover:text-green-800 transition-colors"
+              >
+                {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
+            </div>
+          </div>
+
+          {/* Mobile Navigation */}
+          {isMenuOpen && (
+            <div className="md:hidden">
+              <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-green-100">
+                <button className="block w-full text-left bg-green-700 hover:bg-green-800 text-white px-4 py-2 rounded-full transition-colors duration-200 font-medium">
+                  Sign In
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </nav>
+
+      {/* Hero Section */}
+      <section className="relative flex-1 overflow-hidden flex items-center">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0 bg-gradient-to-r from-green-600 to-emerald-600"></div>
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Content */}
+            <div className="space-y-8">
+              <div className="space-y-6">
+                <h2 className="text-4xl lg:text-6xl font-bold text-green-900 leading-tight">
+                  Discover Kerala's
+                  <span className="block text-green-700">Cultural Heritage</span>
+                </h2>
+                <p className="text-lg text-gray-700 leading-relaxed max-w-xl">
+                  Experience the rich traditions, taste authentic flavors, and listen to timeless melodies of God's Own Country through immersive AR and curated content.
+                </p>
+              </div>
+            </div>
+
+            {/* Image */}
+            <div className="relative">
+              <div className="relative overflow-hidden shadow-2xl rounded-xl">
+                <img
+                  src={bgimages[currentIndex].src}
+                  className="w-full h-[400px] lg:h-[550px] object-cover transition-all duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-green-900/30 to-transparent"></div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-
-      {/* Features Grid */}
-      <div className="pb-20 px-4 sm:px-6 lg:px-8">
-        <div className="container mx-auto max-w-6xl">
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* AR Experiences Card */}
-            <Link to="/ar" className="group">
-              <div className="bg-card border border-primary/20 rounded-xl p-8 shadow-card hover:shadow-soft transition-all duration-300 hover:-translate-y-1">
-                <div className="bg-gradient-primary p-3 rounded-lg w-fit mb-6 group-hover:scale-110 transition-transform">
-                  <Camera className="h-8 w-8 text-primary-foreground" />
-                </div>
-                <h3 className="text-2xl font-semibold text-foreground mb-4">AR Experiences</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  Point your camera to discover 3D cultural models at specific locations. 
-                  Watch Kathakali dancers, historic spice ships, and traditional artifacts come to life.
-                </p>
-              </div>
-            </Link>
-
-            {/* Restaurants Card */}
-            <Link to="/restaurants" className="group">
-              <div className="bg-card border border-primary/20 rounded-xl p-8 shadow-card hover:shadow-soft transition-all duration-300 hover:-translate-y-1">
-                <div className="bg-gradient-kerala p-3 rounded-lg w-fit mb-6 group-hover:scale-110 transition-transform">
-                  <MapPin className="h-8 w-8 text-primary-foreground" />
-                </div>
-                <h3 className="text-2xl font-semibold text-foreground mb-4">Kerala Restaurants</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  Find authentic Kerala restaurants near you. Discover traditional flavors, 
-                  spices, and culinary heritage with detailed location guides.
-                </p>
-              </div>
-            </Link>
-
-            {/* Folk Music Card */}
-            <Link to="/music" className="group">
-              <div className="bg-card border border-primary/20 rounded-xl p-8 shadow-card hover:shadow-soft transition-all duration-300 hover:-translate-y-1">
-                <div className="bg-kerala-spice/80 p-3 rounded-lg w-fit mb-6 group-hover:scale-110 transition-transform">
-                  <Music className="h-8 w-8 text-white" />
-                </div>
-                <h3 className="text-2xl font-semibold text-foreground mb-4">Folk Music</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  Listen to traditional Kerala folk songs and melodies. 
-                  Immerse yourself in the musical heritage passed down through generations.
-                </p>
-              </div>
-            </Link>
-          </div>
-        </div>
-      </div>
+      </section>
     </div>
   );
-};
-
-export default Index;
+}
