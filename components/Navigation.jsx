@@ -36,6 +36,8 @@ const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
+
+  
   const isActive = (path) => pathname === path;
 
   const navItems = [
@@ -54,7 +56,7 @@ const Navigation = () => {
             href="/"
             className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent hover:from-green-700 hover:to-emerald-700 transition-all duration-200"
           >
-            Naattukadha AR
+            Nattukaadha AR
           </Link>
 
           {/* Desktop Navigation */}
