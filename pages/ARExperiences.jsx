@@ -1,7 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { useState, useEffect} from "react";
 import { Camera, Play, Pause, RotateCcw, MapPin, Info, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
 
@@ -14,9 +12,9 @@ import { toast } from "sonner";
 
 const ARExperiences = () => {
   const [isARReady, setIsARReady] = useState(false);
-  const [currentModel, setCurrentModel] = useState<string | null>(null);
+  const [currentModel, setCurrentModel] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [audioElement, setAudioElement] = useState<HTMLAudioElement | null>(null);
+  const [audioElement, setAudioElement] = useState(null);
 
   // Sample AR models and their GPS locations (replace with actual data)
   const arExperiences = [
@@ -208,7 +206,7 @@ const ARExperiences = () => {
         </div>
 
         {/* Instructions Card */}
-        <Card className="mb-8 p-6 border-primary/20 shadow-card">
+        <card className="mb-8 p-6 border-primary/20 shadow-card">
           <div className="flex items-start gap-4">
             <Info className="h-6 w-6 text-primary mt-1" />
             <div>
@@ -221,22 +219,22 @@ const ARExperiences = () => {
               </ul>
             </div>
           </div>
-        </Card>
+        </card>
 
         {/* AR Control Panel */}
         <div className="flex flex-col sm:flex-row gap-4 mb-8">
-          <Button 
-            onClick={startARExperience}
-            className="bg-gradient-primary shadow-soft hover:shadow-card transition-all"
-            size="lg"
-          >
-            <Camera className="mr-2 h-5 w-5" />
-            {isARReady ? "Start AR Experience" : "Loading AR..."}
-          </Button>
+         <button 
+  onClick={startARExperience} 
+  className="flex items-center gap-2 shadow-md hover:shadow-lg transition-all"
+>
+  <Camera className="h-5 w-5" />
+  {isARReady ? "Start AR Experience" : "Loading AR..."}
+</button>
+
 
           {currentModel && (
             <div className="flex items-center gap-2">
-              <Button
+              <button
                 onClick={toggleAudio}
                 variant="outline"
                 className="border-primary/30"
@@ -247,7 +245,7 @@ const ARExperiences = () => {
                   <Play className="mr-2 h-4 w-4" />
                 )}
                 {isPlaying ? "Pause Audio" : "Play Audio"}
-              </Button>
+              </button>
               <span className="text-sm text-muted-foreground">
                 Current: {currentModel}
               </span>
@@ -274,7 +272,7 @@ const ARExperiences = () => {
           </h2>
           
           {arExperiences.map((experience) => (
-            <Card key={experience.id} className="p-6 border-primary/20 shadow-card hover:shadow-soft transition-all">
+            <card key={experience.id} className="p-6 border-primary/20 shadow-card hover:shadow-soft transition-all">
               <div className="flex items-start gap-4 mb-4">
                 <div className="bg-gradient-primary p-2 rounded-lg">
                   <RotateCcw className="h-5 w-5 text-primary-foreground" />
@@ -300,20 +298,11 @@ const ARExperiences = () => {
               <div className="mt-4 text-xs text-muted-foreground bg-muted p-2 rounded">
                 <strong>Setup:</strong> Place your 3D model file at <code>{experience.modelUrl}</code> and audio at <code>{experience.audioUrl}</code>
               </div>
-            </Card>
+            </card>
           ))}
         </div>
 
-        {/* Developer Notes */}
-        <Card className="mt-8 p-6 border-kerala-spice/30 bg-kerala-spice/5">
-          <h3 className="font-semibold text-foreground mb-3">Developer Setup Instructions:</h3>
-          <div className="space-y-2 text-sm text-muted-foreground">
-            <p><strong>1. 3D Models:</strong> Place your .glb/.gltf files in the <code>public/models/</code> folder</p>
-            <p><strong>2. Audio Files:</strong> Place your .mp3 narration files in the <code>public/audio/</code> folder</p>
-            <p><strong>3. GPS Coordinates:</strong> Update the lat/lng values in the <code>arExperiences</code> array above</p>
-            <p><strong>4. Testing:</strong> Use your phone's browser and visit the locations for full AR experience</p>
-          </div>
-        </Card>
+        
       </div>
     </div>
   );

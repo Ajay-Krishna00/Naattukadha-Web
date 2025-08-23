@@ -1,10 +1,6 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Slider } from "@/components/ui/slider";
 import { Play, Pause, SkipBack, SkipForward, Volume2, Music, Download } from "lucide-react";
-import { toast } from "sonner";
 
 // Sample folk music data (replace with your actual MP3 files)
 const folkSongs = [
@@ -64,15 +60,104 @@ const folkSongs = [
   },
 ];
 
+// Custom Toast Component
+const Toast = ({ message, type, onClose }) => (
+  <div className={`fixed top-4 right-4 z-50 px-4 py-3 rounded-lg shadow-lg transition-all duration-300 ${
+    type === 'error' ? 'bg-red-500 text-white' : 'bg-green-500 text-white'
+  }`}>
+    <div className="flex items-center justify-between">
+      <span className="text-sm">{message}</span>
+      <button onClick={onClose} className="ml-3 text-white hover:opacity-75">
+        ×
+      </button>
+    </div>
+  </div>
+);
+
+// Custom Slider Component
+const Slider = ({ value, max, step = 1, onValueChange, className = "" }) => {
+  const percentage = (value / max) * 100;
+  
+  return (
+    <div className={`relative h-2 bg-gray-200 rounded-full cursor-pointer ${className}`}>
+      <div 
+        className="absolute h-full bg-gradient-to-r from-green-500 to-emerald-600 rounded-full transition-all"
+        style={{ width: `${percentage}%` }}
+      />
+      <input
+        type="range"
+        min={0}
+        max={max}
+        step={step}
+        value={value}
+        onChange={(e) => onValueChange(Number(e.target.value))}
+        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+      />
+      <div 
+        className="absolute w-4 h-4 bg-white border-2 border-green-500 rounded-full shadow-md transform -translate-y-1 transition-all hover:scale-110"
+        style={{ left: `calc(${percentage}% - 8px)` }}
+      />
+    </div>
+  );
+};
+
+// Custom Button Component
+const Button = ({ children, onClick, variant = "default", size = "default", className = "", disabled = false, ...props }) => {
+  const baseClasses = "inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed";
+  
+  const variants = {
+    default: "bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-lg hover:shadow-xl hover:from-green-600 hover:to-emerald-700 active:scale-95",
+    ghost: "text-gray-700 hover:bg-gray-100 hover:text-green-600",
+    outline: "border-2 border-green-500 text-green-600 hover:bg-green-500 hover:text-white"
+  };
+  
+  const sizes = {
+    sm: "px-3 py-1.5 text-sm",
+    default: "px-4 py-2",
+    lg: "px-6 py-3 text-lg"
+  };
+  
+  return (
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      className={`${baseClasses} ${variants[variant]} ${sizes[size]} ${className}`}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+};
+
+// Custom Card Component
+const Card = ({ children, className = "", onClick, ...props }) => (
+  <div 
+    className={`bg-white rounded-xl border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 ${
+      onClick ? 'cursor-pointer hover:border-green-300' : ''
+    } ${className}`}
+    onClick={onClick}
+    {...props}
+  >
+    {children}
+  </div>
+);
+
 const FolkMusic = () => {
-  const [currentSong, setCurrentSong] = useState<typeof folkSongs[0] | null>(null);
+  const [currentSong, setCurrentSong] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(70);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [toast, setToast] = useState(null);
 
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const audioRef = useRef(null);
+
+  // Toast helper function
+  const showToast = (message, type = 'success') => {
+    setToast({ message, type });
+    setTimeout(() => setToast(null), 3000);
+  };
 
   // Initialize audio when component mounts
   useEffect(() => {
@@ -94,7 +179,7 @@ const FolkMusic = () => {
       });
 
       audioRef.current.addEventListener('error', () => {
-        toast.error("Could not load audio file. Please ensure MP3 files are in public/music/ folder.");
+        showToast("Could not load audio file. Please ensure MP3 files are in public/music/ folder.", 'error');
       });
     }
 
@@ -127,10 +212,10 @@ const FolkMusic = () => {
     audioRef.current.play()
       .then(() => {
         setIsPlaying(true);
-        toast.success(`Now playing: ${song.title}`);
+        showToast(`Now playing: ${song.title}`);
       })
       .catch(() => {
-        toast.error(`Could not play ${song.title}. Check if file exists at public/music/${song.filename}`);
+        showToast(`Could not play ${song.title}. Check if file exists at public/music/${song.filename}`, 'error');
       });
   };
 
@@ -145,7 +230,7 @@ const FolkMusic = () => {
     if (audioRef.current && currentSong) {
       audioRef.current.play()
         .then(() => setIsPlaying(true))
-        .catch(() => toast.error("Could not resume playback"));
+        .catch(() => showToast("Could not resume playback", 'error'));
     }
   };
 
@@ -161,8 +246,8 @@ const FolkMusic = () => {
 
   const seekTo = (newTime) => {
     if (audioRef.current) {
-      audioRef.current.currentTime = newTime[0];
-      setCurrentTime(newTime[0]);
+      audioRef.current.currentTime = newTime;
+      setCurrentTime(newTime);
     }
   };
 
@@ -179,97 +264,106 @@ const FolkMusic = () => {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    toast.success(`Downloading ${song.title}`);
+    showToast(`Downloading ${song.title}`);
   };
 
   return (
-    <div className="min-h-screen bg-gradient-subtle pt-20">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 pt-8">
+      {/* Toast */}
+      {toast && (
+        <Toast 
+          message={toast.message} 
+          type={toast.type} 
+          onClose={() => setToast(null)} 
+        />
+      )}
+
+      <div className="container mx-auto px-4 py-8 max-w-4xl">
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-4">
             Kerala Folk Music
           </h1>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-gray-600 max-w-2xl mx-auto text-lg">
             Listen to traditional Kerala folk songs and melodies passed down through generations.
           </p>
         </div>
 
         {/* Current Playing Card */}
         {currentSong && (
-          <Card className="mb-8 p-6 border-primary/20 shadow-card bg-gradient-primary/5">
-            <div className="text-center mb-6">
-              <div className="bg-gradient-kerala p-4 rounded-full w-20 h-20 mx-auto mb-4 flex items-center justify-center">
-                <Music className="h-10 w-10 text-primary-foreground" />
+          <Card className="mb-8 p-8 bg-gradient-to-br from-green-50 to-emerald-50 border-green-200">
+            <div className="text-center mb-8">
+              <div className="bg-gradient-to-r from-green-500 to-emerald-600 p-6 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center shadow-lg">
+                <Music className="h-12 w-12 text-white" />
               </div>
-              <h3 className="text-xl font-semibold text-foreground mb-1">
+              <h3 className="text-2xl font-bold text-gray-800 mb-2">
                 {currentSong.title}
               </h3>
-              <p className="text-muted-foreground">{currentSong.artist}</p>
-              <p className="text-sm text-muted-foreground mt-2">
+              <p className="text-gray-600 text-lg font-medium">{currentSong.artist}</p>
+              <p className="text-gray-500 mt-3 max-w-md mx-auto leading-relaxed">
                 {currentSong.description}
               </p>
             </div>
 
             {/* Progress Bar */}
-            <div className="mb-6">
+            <div className="mb-8">
               <Slider
-                value={[currentTime]}
+                value={currentTime}
                 max={duration}
                 step={1}
                 onValueChange={seekTo}
-                className="mb-2"
+                className="mb-3"
               />
-              <div className="flex justify-between text-sm text-muted-foreground">
+              <div className="flex justify-between text-sm text-gray-500 font-medium">
                 <span>{formatTime(currentTime)}</span>
                 <span>{formatTime(duration)}</span>
               </div>
             </div>
 
             {/* Playback Controls */}
-            <div className="flex items-center justify-center gap-4 mb-6">
+            <div className="flex items-center justify-center gap-6 mb-8">
               <Button
                 variant="ghost"
-                size="sm"
+                size="lg"
                 onClick={playPreviousSong}
-                className="hover:bg-primary/10"
+                className="p-3 rounded-full hover:bg-green-100"
               >
-                <SkipBack className="h-5 w-5" />
+                <SkipBack className="h-6 w-6" />
               </Button>
 
               <Button
                 onClick={isPlaying ? pauseSong : resumeSong}
                 size="lg"
-                className="bg-gradient-primary shadow-soft hover:shadow-card transition-all"
+                className="p-4 rounded-full text-xl shadow-2xl hover:scale-105"
               >
                 {isPlaying ? (
-                  <Pause className="h-6 w-6" />
+                  <Pause className="h-8 w-8" />
                 ) : (
-                  <Play className="h-6 w-6" />
+                  <Play className="h-8 w-8 ml-1" />
                 )}
               </Button>
 
               <Button
                 variant="ghost"
-                size="sm"
+                size="lg"
                 onClick={playNextSong}
-                className="hover:bg-primary/10"
+                className="p-3 rounded-full hover:bg-green-100"
               >
-                <SkipForward className="h-5 w-5" />
+                <SkipForward className="h-6 w-6" />
               </Button>
             </div>
 
             {/* Volume Control */}
-            <div className="flex items-center gap-3 max-w-xs mx-auto">
-              <Volume2 className="h-4 w-4 text-muted-foreground" />
+            <div className="flex items-center gap-4 max-w-xs mx-auto">
+              <Volume2 className="h-5 w-5 text-gray-500" />
               <Slider
-                value={[volume]}
+                value={volume}
                 max={100}
                 step={1}
-                onValueChange={(value) => setVolume(value[0])}
+                onValueChange={setVolume}
                 className="flex-1"
               />
-              <span className="text-sm text-muted-foreground w-8">
+              <span className="text-sm text-gray-500 font-medium w-12 text-right">
                 {volume}%
               </span>
             </div>
@@ -277,58 +371,60 @@ const FolkMusic = () => {
         )}
 
         {/* Songs List */}
-        <div className="space-y-4">
-          <h2 className="text-2xl font-semibold text-foreground mb-6">
+        <div className="space-y-6">
+          <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">
             Traditional Songs Collection
           </h2>
           
           {folkSongs.map((song, index) => (
             <Card
               key={song.id}
-              className={`p-4 border-primary/20 shadow-card hover:shadow-soft transition-all cursor-pointer ${
-                currentSong?.id === song.id ? 'bg-primary/5 border-primary/40' : ''
+              className={`p-6 transition-all duration-300 hover:scale-[1.02] ${
+                currentSong?.id === song.id 
+                  ? 'bg-gradient-to-r from-green-50 to-emerald-50 border-green-300 shadow-xl' 
+                  : 'hover:border-green-200'
               }`}
               onClick={() => playSong(song, index)}
             >
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-6">
                 {/* Play Button */}
                 <Button
                   variant="ghost"
-                  size="sm"
-                  className="shrink-0 hover:bg-primary/10"
+                  size="lg"
+                  className="shrink-0 p-3 rounded-full hover:bg-green-100"
                   onClick={(e) => {
                     e.stopPropagation();
                     playSong(song, index);
                   }}
                 >
                   {currentSong?.id === song.id && isPlaying ? (
-                    <Pause className="h-5 w-5" />
+                    <Pause className="h-6 w-6 text-green-600" />
                   ) : (
-                    <Play className="h-5 w-5" />
+                    <Play className="h-6 w-6 text-green-600 ml-0.5" />
                   )}
                 </Button>
 
                 {/* Song Info */}
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between mb-1">
-                    <h3 className="font-semibold text-foreground truncate">
+                  <div className="flex items-start justify-between mb-3">
+                    <h3 className="font-bold text-lg text-gray-800 leading-tight">
                       {song.title}
                     </h3>
-                    <span className="text-sm text-muted-foreground">
+                    <span className="text-sm text-gray-500 font-medium ml-4">
                       {song.duration}
                     </span>
                   </div>
                   
-                  <p className="text-sm text-muted-foreground mb-1">
+                  <p className="text-gray-600 font-medium mb-3">
                     {song.artist}
                   </p>
                   
-                  <p className="text-xs text-muted-foreground leading-relaxed">
+                  <p className="text-sm text-gray-500 leading-relaxed mb-4">
                     {song.description}
                   </p>
                   
-                  <div className="flex items-center justify-between mt-2">
-                    <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs bg-green-100 text-green-700 px-3 py-1.5 rounded-full font-medium">
                       {song.category}
                     </span>
                     
@@ -339,9 +435,9 @@ const FolkMusic = () => {
                         e.stopPropagation();
                         downloadSong(song);
                       }}
-                      className="text-xs hover:bg-primary/10"
+                      className="text-xs hover:bg-green-100 px-3 py-1.5"
                     >
-                      <Download className="h-3 w-3 mr-1" />
+                      <Download className="h-3 w-3 mr-1.5" />
                       Download
                     </Button>
                   </div>
@@ -350,18 +446,6 @@ const FolkMusic = () => {
             </Card>
           ))}
         </div>
-
-        {/* Developer Instructions */}
-        <Card className="mt-8 p-6 border-kerala-spice/30 bg-kerala-spice/5">
-          <h3 className="font-semibold text-foreground mb-3">Developer Setup Instructions:</h3>
-          <div className="space-y-2 text-sm text-muted-foreground">
-            <p><strong>1. Audio Files:</strong> Place your MP3 files in the <code>public/music/</code> folder</p>
-            <p><strong>2. File Names:</strong> Update the <code>filename</code> property in the <code>folkSongs</code> array to match your MP3 files</p>
-            <p><strong>3. Metadata:</strong> Add proper song titles, artists, descriptions, and categories</p>
-            <p><strong>4. Playlists:</strong> Create different categories or playlists for better organization</p>
-            <p><strong>5. Streaming:</strong> For production, consider using a proper audio streaming service or CDN</p>
-          </div>
-        </Card>
       </div>
     </div>
   );

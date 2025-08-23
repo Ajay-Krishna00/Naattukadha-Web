@@ -1,6 +1,6 @@
 "use client";
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+
 import { Camera, MapPin, Music, ArrowRight } from "lucide-react";
 
 const Index = () => {
@@ -23,11 +23,11 @@ const Index = () => {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
             <Link to="/ar">
-              <Button size="lg" className="bg-gradient-primary shadow-soft hover:shadow-card transition-all duration-300 group">
+              <button size="lg" className="bg-gradient-primary shadow-soft hover:shadow-card transition-all duration-300 group">
                 <Camera className="mr-2 h-5 w-5 group-hover:rotate-12 transition-transform" />
                 Start AR Experience
                 <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-              </Button>
+              </button>
             </Link>
           </div>
         </div>
