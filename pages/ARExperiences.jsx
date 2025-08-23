@@ -122,29 +122,24 @@ const ARExperiences = () => {
         ${arExperiences
           .map(
             (exp) => `
-          <a-entity
-            id="model-${exp.id}"
-            gps-entity-place="latitude: ${exp.lat}; longitude: ${exp.lng};"
-            gltf-model="url(${exp.modelUrl})"
-            scale="5 5 5"
-            animation="property: rotation; to: 0 360 0; loop: true; dur: 20000; easing: linear"
-            visible="false"
-            class="ar-model"
-            data-name="${exp.name}"
-            data-audio="${exp.audioUrl}"
-          ></a-entity>
+    <a-entity
+  gltf-model="url(/kathak.glb)"
+  position="0 0 -5"   <!-- 5m in front of camera -->
+  scale="5 5 5"
+  animation="property: rotation; to: 0 360 0; loop: true; dur: 20000; easing: linear"
+></a-entity>
+
         `
           )
           .join("")}
 
         <!-- Camera with GPS -->
-        <a-camera
-          id="ar-camera"
-          gps-camera
-          rotation-reader
-          wasd-controls-enabled="false"
-          look-controls-enabled="false"
-        ></a-camera>
+       <a-camera
+  id="ar-camera"
+  look-controls="enabled: true; magicWindowTrackingEnabled: true; mouseEnabled: false"
+  wasd-controls="enabled: false"
+></a-camera>
+
       </a-scene>
     `;
 
@@ -206,7 +201,7 @@ const ARExperiences = () => {
         </div>
 
         {/* Instructions Card */}
-        <card className="mb-8 p-6 border-primary/20 shadow-card">
+        {/* <card className="mb-8 p-6 border-primary/20 shadow-card">
           <div className="flex items-start gap-4">
             <Info className="h-6 w-6 text-primary mt-1" />
             <div>
@@ -219,7 +214,7 @@ const ARExperiences = () => {
               </ul>
             </div>
           </div>
-        </card>
+        </card> */}
 
         {/* AR Control Panel */}
         <div className="flex flex-col sm:flex-row gap-4 mb-8">
@@ -256,7 +251,7 @@ const ARExperiences = () => {
         {/* AR Container */}
         <div 
           id="ar-container" 
-          className="w-full h-[60vh] bg-muted rounded-lg border border-primary/20 mb-8 flex items-center justify-center"
+          className="w-full bg-muted rounded-lg border border-primary/20 mb-8 flex items-center justify-center"
         >
           <div className="text-center text-muted-foreground">
             <Camera className="h-12 w-12 mx-auto mb-4 opacity-50" />
@@ -266,7 +261,7 @@ const ARExperiences = () => {
         </div>
 
         {/* Available Experiences */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           <h2 className="col-span-full text-2xl font-semibold text-foreground mb-4">
             Available AR Experiences
           </h2>
@@ -300,7 +295,7 @@ const ARExperiences = () => {
               </div>
             </card>
           ))}
-        </div>
+        </div> */}
 
         
       </div>
