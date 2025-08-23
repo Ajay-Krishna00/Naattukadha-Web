@@ -1,5 +1,5 @@
 "use client";
-
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { useRouter } from "next/navigation"; 
@@ -31,12 +31,19 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
-            <div className="flex-shrink-0">
-              <h1 className="text-xl font-bold text-green-800 tracking-wide">
-                NATTUKADHA AR
-              </h1>
-            </div>
-
+        <div className="flex-shrink-0 flex items-center gap-2">
+  {/* Logo Image */}
+  <Image
+    src="/logonaatu.jpeg"  
+    alt="Nattukadha AR Logo"
+    width={40}
+    height={40}
+    className="rounded-md"
+  />
+  <h1 className="text-xl font-bold text-green-800 tracking-wide">
+    NATTUKADHA AR
+  </h1>
+</div>
             {/* Desktop Button */}
             <div className="hidden md:block">
               <button 
