@@ -1,7 +1,8 @@
 "use client";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Camera, MapPin, Music } from "lucide-react";
+import { Menu, X, Camera, MapPin, Music, User } from "lucide-react";
+import path from "path";
 
 // Reusable Button
 const Button = ({ children, onClick, variant = "default", size = "default", className = "", ...props }) => {
@@ -40,6 +41,7 @@ const Navigation = () => {
     { path: "/ar", label: "AR Experiences", icon: Camera },
     { path: "/restaurants", label: "Restaurants", icon: MapPin },
     { path: "/music", label: "Folk Music", icon: Music },
+    { path: "/profile", label: "Profile", icon: User },
   ];
 
   return (
