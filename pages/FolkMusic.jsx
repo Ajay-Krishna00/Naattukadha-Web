@@ -31,6 +31,24 @@ const folkSongs = [
   description: "Fusion song with Indian and Western influences.",
   category: "Fusion",
 },
+{
+  id: "4",
+  title: "Vidya Vox Mashup",
+  artist: "Masala Coffee - Music Mojo",
+  duration: "4:25", 
+  filename: "/kaantha.mp4", 
+   description: "A lively fusion track inspired by the vibrant Thrissur Pooram festival, blending traditional Kerala rhythms with modern music elements.",
+  category: "Fusion",
+},
+{
+  id: "5",
+  title: "Kuttanadan Boat Song",
+  artist: "Stephen Devassy",
+  duration: "5:21", 
+  filename: "/kuttanadan.mp4", 
+  description: "A modern rendition of the traditional Kuttanadan boat race song, capturing the energy of Kerala’s iconic boat races with a fusion of folk and contemporary sounds.",
+  category: "Fusion",
+},
 ];
 
 // Custom Toast Component
