@@ -122,29 +122,24 @@ const ARExperiences = () => {
         ${arExperiences
           .map(
             (exp) => `
-          <a-entity
-            id="model-${exp.id}"
-            gps-entity-place="latitude: ${exp.lat}; longitude: ${exp.lng};"
-            gltf-model="url(${exp.modelUrl})"
-            scale="5 5 5"
-            animation="property: rotation; to: 0 360 0; loop: true; dur: 20000; easing: linear"
-            visible="false"
-            class="ar-model"
-            data-name="${exp.name}"
-            data-audio="${exp.audioUrl}"
-          ></a-entity>
+    <a-entity
+  gltf-model="url(/kathak.glb)"
+  position="0 0 -5"   <!-- 5m in front of camera -->
+  scale="5 5 5"
+  animation="property: rotation; to: 0 360 0; loop: true; dur: 20000; easing: linear"
+></a-entity>
+
         `
           )
           .join("")}
 
         <!-- Camera with GPS -->
-        <a-camera
-          id="ar-camera"
-          gps-camera
-          rotation-reader
-          wasd-controls-enabled="false"
-          look-controls-enabled="false"
-        ></a-camera>
+       <a-camera
+  id="ar-camera"
+  look-controls="enabled: true; magicWindowTrackingEnabled: true; mouseEnabled: false"
+  wasd-controls="enabled: false"
+></a-camera>
+
       </a-scene>
     `;
 
