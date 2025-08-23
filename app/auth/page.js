@@ -1,5 +1,7 @@
+"use client";
 import React, { useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
+import { useRouter } from "next/navigation";
 
 // Replace with your Supabase URL and anon key
 const supabaseUrl = 'https://tuwilialrvylamybrocq.supabase.co';
@@ -15,6 +17,7 @@ export default function Auth() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+    const router = useRouter();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -76,6 +79,7 @@ export default function Auth() {
       if (error) {
         setError(error.message);
       } else {
+        router.push("/ar");
         setMessage('Successfully signed in!');
         setEmail('');
         setPassword('');
