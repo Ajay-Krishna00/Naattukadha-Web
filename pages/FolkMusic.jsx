@@ -2,15 +2,15 @@
 import { useState, useRef, useEffect } from "react";
 import { Play, Pause, SkipBack, SkipForward, Volume2, Music, Download } from "lucide-react";
 
-// Sample folk music data (replace with your actual MP3 files)
+// Sample folk music data 
 const folkSongs = [
   {
     id: "1",
     title: "Thiruvaavaniraavu",
     artist: "Traditional Kerala Folk",
     duration: "3:37",
-    filename: "/thiruva.mp4", // Place MP3 file in public/music/
-    description: "Traditional boat song of Kerala fishermen, sung during monsoon season.",
+    filename: "/thiruva.mp4", 
+    description: "A famous Onam song from Kerala",
     category: "Work Songs",
   },
   {
@@ -19,45 +19,18 @@ const folkSongs = [
     artist: "Women's Folk Ensemble",
     duration: "3:44",
     filename: "/onam.mp4",
-    description: "Classical dance-song performed by women during Thiruvathira festival.",
+    description: "A lively folk song performed by women during Onam festivities, celebrating the harvest season with rhythmic claps and traditional melodies.",
     category: "Festival Songs",
   },
 {
   id: "3",
   title: "Vidya Vox Mashup",
   artist: "Vidya Vox",
-  duration: "3:43", // update with real duration if you want
+  duration: "3:43", 
   filename: "/vidyavox.mp4", 
   description: "Fusion song with Indian and Western influences.",
   category: "Fusion",
 },
-  // {
-  //   id: "4",
-  //   title: "Mappila Pattu",
-  //   artist: "Malabar Folk Singers",
-  //   duration: "4:02",
-  //   filename: "mappila-pattu.mp3",
-  //   description: "Traditional Mappila community songs from North Kerala with Arabic influences.",
-  //   category: "Cultural Songs",
-  // },
-  // {
-  //   id: "5",
-  //   title: "Oppana Pattu",
-  //   artist: "Wedding Folk Group",
-  //   duration: "3:30",
-  //   filename: "oppana-pattu.mp3",
-  //   description: "Joyous wedding songs performed during Muslim matrimonial celebrations.",
-  //   category: "Wedding Songs",
-  // },
-  // {
-  //   id: "6",
-  //   title: "Padayani Thottam",
-  //   artist: "Ritual Performers",
-  //   duration: "6:10",
-  //   filename: "padayani-thottam.mp3",
-  //   description: "Ritualistic song-dance performed in temples during Padayani festival.",
-  //   category: "Ritual Songs",
-  // },
 ];
 
 // Custom Toast Component
@@ -259,7 +232,7 @@ const FolkMusic = () => {
 
   const downloadSong = (song) => {
     const link = document.createElement('a');
-    link.href = `/music/${song.filename}`;
+    link.href = `${song.filename}`;
     link.download = song.filename;
     document.body.appendChild(link);
     link.click();
@@ -371,11 +344,7 @@ const FolkMusic = () => {
         )}
 
         {/* Songs List */}
-        <div className="space-y-6">
-          <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">
-            Traditional Songs Collection
-          </h2>
-          
+        <div className="space-y-6">        
           {folkSongs.map((song, index) => (
             <Card
               key={song.id}
