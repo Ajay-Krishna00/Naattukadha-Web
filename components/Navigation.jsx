@@ -42,6 +42,7 @@ const Navigation = () => {
 
   const navItems = [
     { path: "/ar", label: "AR Experiences", icon: Camera },
+    { path: "/auth", label: "Auth", icon: Camera },
     { path: "/restaurants", label: "Restaurants", icon: MapPin },
     { path: "/music", label: "Folk Music", icon: Music },
     { path: "/profile", label: "Profile", icon: User },

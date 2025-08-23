@@ -17,7 +17,7 @@ export default function RootLayout({ children }) {
           <TooltipProvider>
             <Sonner />
             {/* Show Navigation only if NOT on index page */}
-            {pathname !== "/" && <Navigation />}
+            {pathname !== "/" && pathname !== "/auth" && <Navigation />}
             {children}
           </TooltipProvider>
         </Providers>
