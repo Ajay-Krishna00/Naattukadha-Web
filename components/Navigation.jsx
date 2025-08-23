@@ -36,6 +36,8 @@ const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
+
+  
   const isActive = (path) => pathname === path;
 
   const navItems = [
