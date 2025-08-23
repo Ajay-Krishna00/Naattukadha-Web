@@ -1,36 +1,23 @@
-import React from 'react';
-import { Menu, X, ArrowRight, Play, MapPin, Music, Utensils, Palette } from 'lucide-react';
+"use client";
 
-function App() {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const [currentIndex, setCurrentIndex] = React.useState(0);
+import { useState, useEffect } from "react";
+import { Menu, X } from "lucide-react";
 
-  React.useEffect(() => {
-  const interval = setInterval(() => {
-    setCurrentIndex((prev) => (prev + 1) % bgimages.length);
-  }, 3000); // Change slide every 3 seconds
-  return () => clearInterval(interval);
-}, []);
+const bgimages = [ { src: "kathakali.jpg", }, { src: "houseboat.jpg", }, { src: "temple.jpg", }, { src: "padyani.jpg", }, ];
 
+export default function HomePage() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  const bgimages = [
-  {
-    src: "kathakali.jpg",
-  },
-  {
-    src: "houseboat.jpg",
-  },
-  {
-    src: "temple.jpg",
-  },
-  {
-    src: "padyani.jpg",
-  },
-];
-
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % bgimages.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-green-100">
+    <div className="flex flex-col h-screen">
       {/* Navigation */}
       <nav className="relative bg-white/90 backdrop-blur-md shadow-sm border-b border-green-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -43,7 +30,7 @@ function App() {
             </div>
 
             {/* Desktop Navigation */}
-            <div >
+            <div>
               <button className="bg-green-700 hover:bg-green-800 text-white px-6 py-2 rounded-full transition-colors duration-200 font-medium">
                 Sign In
               </button>
@@ -74,13 +61,13 @@ function App() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden">
+      <section className="relative flex-1 overflow-hidden flex items-center">
         {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-5">
+        <div className="absolute inset-0 opacity-10">
           <div className="absolute inset-0 bg-gradient-to-r from-green-600 to-emerald-600"></div>
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Content */}
             <div className="space-y-8">
@@ -97,14 +84,13 @@ function App() {
 
             {/* Image */}
             <div className="relative">
-              <div className="relative overflow-hidden shadow-2xl">
-                 <img
-                   src={bgimages[currentIndex].src}
-                    className="w-full h-96 lg:h-[500px] object-cover transition-all duration-700"
-                  />
-                <div className="absolute inset-0 bg-gradient-to-t from-green-900/20 to-transparent"></div>
+              <div className="relative overflow-hidden shadow-2xl rounded-xl">
+                <img
+                  src={bgimages[currentIndex].src}
+                  className="w-full h-[400px] lg:h-[550px] object-cover transition-all duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-green-900/30 to-transparent"></div>
               </div>
-             
             </div>
           </div>
         </div>
@@ -112,5 +98,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
