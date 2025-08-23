@@ -2,38 +2,6 @@
 import { useState, useEffect} from "react";
 import { MapPin, ExternalLink, Search, Star, Clock } from "lucide-react";
 
-const sampleRestaurants = [
-  {
-    id: "sample-1",
-    name: "Kerala Kitchen",
-    description: "Authentic Kerala cuisine featuring traditional flavors and spices.",
-    image: null,
-    rating: "4.2",
-    priceLevel: "$$",
-    address: "Kothamangalam, Kerala, India",
-    phone: "Phone not available",
-    hours: "9:00 AM - 10:00 PM",
-    lat: 10.0527,
-    lng: 76.6350,
-    distance: 0.5,
-    cuisine: "Kerala"
-  },
-  {
-    id: "sample-2",
-    name: "Malayali Mess",
-    description: "Traditional Kerala home-style cooking with authentic sadya and fish curry.",
-    image: null,
-    rating: "4.5",
-    priceLevel: "$$",
-    address: "Muvattupuzha, Kerala, India",
-    phone: "Phone not available",
-    hours: "8:00 AM - 9:00 PM",
-    lat: 10.0889,
-    lng: 76.5742,
-    distance: 1.2,
-    cuisine: "Kerala"
-  }
-];
 
 const restaurantImages = [
   "/appam.jpg",
@@ -48,6 +16,40 @@ const restaurantImages = [
 ];
 
 const Restaurants = () => {
+
+  const sampleRestaurants = [
+  {
+    id: "sample-1",
+    name: "Kerala Kitchen",
+    description: "Authentic Kerala cuisine featuring traditional flavors and spices.",
+    image: restaurantImages[0 % restaurantImages.length],
+    rating: "4.2",
+    priceLevel: "$$",
+    address: "Kothamangalam, Kerala, India",
+    phone: "Phone not available",
+    hours: "9:00 AM - 10:00 PM",
+    lat: 10.0527,
+    lng: 76.6350,
+    distance: 0.5,
+    cuisine: "Kerala"
+  },
+  {
+    id: "sample-2",
+    name: "Malayali Mess",
+    description: "Traditional Kerala home-style cooking with authentic sadya and fish curry.",
+    image: restaurantImages[1 % restaurantImages.length],
+    rating: "4.5",
+    priceLevel: "$$",
+    address: "Muvattupuzha, Kerala, India",
+    phone: "Phone not available",
+    hours: "8:00 AM - 9:00 PM",
+    lat: 10.0889,
+    lng: 76.5742,
+    distance: 1.2,
+    cuisine: "Kerala"
+  }
+]; 
+
   const [restaurants, setRestaurants] = useState(sampleRestaurants);
   const [originalRestaurants, setOriginalRestaurants] = useState(sampleRestaurants);
   const [searchQuery, setSearchQuery] = useState("");
@@ -58,7 +60,7 @@ const Restaurants = () => {
   const showToast = (message, type = "info") => {
     const toast = document.createElement("div");
     toast.className = `fixed top-4 right-4 z-50 p-4 rounded-md text-white transition-opacity duration-300 ${
-      type === "success" ? "bg-green-500" : type === "error" ? "bg-red-500" : "bg-blue-500"
+      type === "success" ? "bg-green-500" : type === "error" ? "bg-red-500" : "bg-green-500"
     }`;
     toast.textContent = message;
     document.body.appendChild(toast);
@@ -189,28 +191,28 @@ const Restaurants = () => {
         }
         
         // If still no coordinates, try geolocation or fallback
-        if (!userLat || !userLng) {
-          if (navigator.geolocation && (location.protocol === 'https:' || location.hostname === 'localhost')) {
-            try {
-              const position = await new Promise((resolve, reject) => {
-                navigator.geolocation.getCurrentPosition(resolve, reject, {
-                  timeout: 10000,
-                  enableHighAccuracy: false,
-                  maximumAge: 300000
+          if (!userLat || !userLng) {
+            if (navigator.geolocation && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+              try {
+                const position = await new Promise((resolve, reject) => {
+                  navigator.geolocation.getCurrentPosition(resolve, reject, {
+                    timeout: 10000,
+                    enableHighAccuracy: false,
+                    maximumAge: 300000
+                  });
                 });
-              });
-              userLat = position.coords.latitude;
-              userLng = position.coords.longitude;
-            } catch (geoError) {
-              console.warn("Geolocation failed:", geoError.message);
-              userLat = 10.0527;
-              userLng = 76.6350;
+                userLat = position.coords.latitude;
+                userLng = position.coords.longitude;
+              } catch (geoError) {
+                console.warn("Geolocation failed:", geoError.message);
+               userLat = 10.053937;
+userLng = 76.6193309;
+              }
+            } else {
+             userLat = 10.053937;
+userLng = 76.6193309;
             }
-          } else {
-            userLat = 10.0527;
-            userLng = 76.6350;
           }
-        }
       }
 
       // Search radius in meters (15km for better coverage)
@@ -245,6 +247,22 @@ const Restaurants = () => {
       }
 
       const data = await response.json();
+
+            const containsMalayalam = (text) => {
+        if (!text) return false;
+        // Malayalam Unicode range: U+0D00-U+0D7F
+        return /[\u0D00-\u0D7F]/.test(text);
+      };
+
+      // Helper function to check if text is primarily English
+      const isEnglishText = (text) => {
+        if (!text) return false;
+        // Check if text contains Malayalam characters
+        if (containsMalayalam(text)) return false;
+        // Check if text contains mostly Latin characters and common symbols
+        return /^[a-zA-Z0-9\s\-'&.,()]+$/.test(text.trim());
+      };
+
       
       // Process and filter STRICTLY for Kerala restaurants only
       const fetchedRestaurants = data.elements
@@ -253,6 +271,8 @@ const Restaurants = () => {
           const tags = r.tags;
           const name = tags.name.toLowerCase();
           const cuisine = (tags.cuisine || '').toLowerCase();
+
+           if (!isEnglishText(tags.name)) return false;
           
           // EXCLUDE fast food chains and non-Kerala cuisines
           if (tags.amenity === 'fast_food') return false;
@@ -365,7 +385,7 @@ const Restaurants = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 pt-20">
+    <div className="min-h-screen bg-gray-100 pt-20">
       <div className="container mx-auto px-4 py-8 max-w-7xl">
         {/* Header */}
         <div className="text-center mb-8">
@@ -389,18 +409,26 @@ const Restaurants = () => {
                 value={searchLocation}
                 onChange={(e) => setSearchLocation(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleSearch(e)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
               />
             </div>
             
             <button
               onClick={handleSearch}
-              className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 shadow-sm hover:shadow-md"
+              className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 shadow-sm hover:shadow-md"
             >
               Search Kerala Restaurants
             </button>
           </div>
         </div>
+
+         {/* Loading State */}
+        {isLoading && (
+          <div className="text-center py-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading Kerala restaurants...</p>
+          </div>
+        )}  
 
         {/* Restaurant Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
@@ -468,7 +496,7 @@ const Restaurants = () => {
 
                 {/* Address */}
                 <div className="flex items-center gap-2 mb-3">
-                  <MapPin className="h-4 w-4 text-blue-600 flex-shrink-0" />
+                  <MapPin className="h-4 w-4 text-green-600 flex-shrink-0" />
                   <span className="text-sm text-gray-600">
                     {restaurant.address}
                   </span>
@@ -476,7 +504,7 @@ const Restaurants = () => {
 
                 {/* Hours */}
                 <div className="flex items-center gap-2 mb-4">
-                  <Clock className="h-4 w-4 text-blue-600 flex-shrink-0" />
+                  <Clock className="h-4 w-4 text-green-600 flex-shrink-0" />
                   <span className="text-sm text-gray-600">
                     {restaurant.hours}
                   </span>
@@ -485,7 +513,7 @@ const Restaurants = () => {
                 {/* Actions */}
                 <button
                   onClick={() => openInGoogleMaps(restaurant)}
-                  className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 shadow-sm hover:shadow-md"
+                  className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 shadow-sm hover:shadow-md"
                 >
                   <ExternalLink className="h-4 w-4" />
                   View on Google Maps
@@ -506,13 +534,7 @@ const Restaurants = () => {
           </div>
         )}
 
-        {/* Loading State */}
-        {isLoading && (
-          <div className="text-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-            <p className="text-gray-600">Loading Kerala restaurants...</p>
-          </div>
-        )}
+       
       </div>
     </div>
   );
