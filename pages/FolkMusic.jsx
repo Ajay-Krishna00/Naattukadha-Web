@@ -6,58 +6,58 @@ import { Play, Pause, SkipBack, SkipForward, Volume2, Music, Download } from "lu
 const folkSongs = [
   {
     id: "1",
-    title: "Vanchipattu (Boat Song)",
+    title: "Thiruvaavaniraavu",
     artist: "Traditional Kerala Folk",
-    duration: "3:45",
-    filename: "vanchipattu.mp3", // Place MP3 file in public/music/
+    duration: "3:37",
+    filename: "/thiruva.mp4", // Place MP3 file in public/music/
     description: "Traditional boat song of Kerala fishermen, sung during monsoon season.",
     category: "Work Songs",
   },
   {
     id: "2", 
-    title: "Thiruvathirakali",
+    title: "Onapattin Thalam Thullum",
     artist: "Women's Folk Ensemble",
-    duration: "4:20",
-    filename: "thiruvathirakali.mp3",
+    duration: "3:44",
+    filename: "/onam.mp4",
     description: "Classical dance-song performed by women during Thiruvathira festival.",
     category: "Festival Songs",
   },
-  {
-    id: "3",
-    title: "Pallivalu Bhadravattakam",
-    artist: "Temple Musicians",
-    duration: "5:15",
-    filename: "pallivalu.mp3", 
-    description: "Ancient temple song dedicated to Lord Krishna, sung during dawn prayers.",
-    category: "Devotional",
-  },
-  {
-    id: "4",
-    title: "Mappila Pattu",
-    artist: "Malabar Folk Singers",
-    duration: "4:02",
-    filename: "mappila-pattu.mp3",
-    description: "Traditional Mappila community songs from North Kerala with Arabic influences.",
-    category: "Cultural Songs",
-  },
-  {
-    id: "5",
-    title: "Oppana Pattu",
-    artist: "Wedding Folk Group",
-    duration: "3:30",
-    filename: "oppana-pattu.mp3",
-    description: "Joyous wedding songs performed during Muslim matrimonial celebrations.",
-    category: "Wedding Songs",
-  },
-  {
-    id: "6",
-    title: "Padayani Thottam",
-    artist: "Ritual Performers",
-    duration: "6:10",
-    filename: "padayani-thottam.mp3",
-    description: "Ritualistic song-dance performed in temples during Padayani festival.",
-    category: "Ritual Songs",
-  },
+{
+  id: "3",
+  title: "Vidya Vox Mashup",
+  artist: "Vidya Vox",
+  duration: "3:43", // update with real duration if you want
+  filename: "/vidyavox.mp4", 
+  description: "Fusion song with Indian and Western influences.",
+  category: "Fusion",
+},
+  // {
+  //   id: "4",
+  //   title: "Mappila Pattu",
+  //   artist: "Malabar Folk Singers",
+  //   duration: "4:02",
+  //   filename: "mappila-pattu.mp3",
+  //   description: "Traditional Mappila community songs from North Kerala with Arabic influences.",
+  //   category: "Cultural Songs",
+  // },
+  // {
+  //   id: "5",
+  //   title: "Oppana Pattu",
+  //   artist: "Wedding Folk Group",
+  //   duration: "3:30",
+  //   filename: "oppana-pattu.mp3",
+  //   description: "Joyous wedding songs performed during Muslim matrimonial celebrations.",
+  //   category: "Wedding Songs",
+  // },
+  // {
+  //   id: "6",
+  //   title: "Padayani Thottam",
+  //   artist: "Ritual Performers",
+  //   duration: "6:10",
+  //   filename: "padayani-thottam.mp3",
+  //   description: "Ritualistic song-dance performed in temples during Padayani festival.",
+  //   category: "Ritual Songs",
+  // },
 ];
 
 // Custom Toast Component
@@ -207,7 +207,7 @@ const FolkMusic = () => {
 
     setCurrentSong(song);
     setCurrentIndex(index);
-    audioRef.current.src = `/music/${song.filename}`;
+    audioRef.current.src = `${song.filename}`;
     
     audioRef.current.play()
       .then(() => {
