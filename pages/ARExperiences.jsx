@@ -201,7 +201,7 @@ const ARExperiences = () => {
         </div>
 
         {/* Instructions Card */}
-        <card className="mb-8 p-6 border-primary/20 shadow-card">
+        {/* <card className="mb-8 p-6 border-primary/20 shadow-card">
           <div className="flex items-start gap-4">
             <Info className="h-6 w-6 text-primary mt-1" />
             <div>
@@ -214,7 +214,7 @@ const ARExperiences = () => {
               </ul>
             </div>
           </div>
-        </card>
+        </card> */}
 
         {/* AR Control Panel */}
         <div className="flex flex-col sm:flex-row gap-4 mb-8">
@@ -251,7 +251,7 @@ const ARExperiences = () => {
         {/* AR Container */}
         <div 
           id="ar-container" 
-          className="w-full h-[60vh] bg-muted rounded-lg border border-primary/20 mb-8 flex items-center justify-center"
+          className="w-full bg-muted rounded-lg border border-primary/20 mb-8 flex items-center justify-center"
         >
           <div className="text-center text-muted-foreground">
             <Camera className="h-12 w-12 mx-auto mb-4 opacity-50" />
@@ -261,7 +261,7 @@ const ARExperiences = () => {
         </div>
 
         {/* Available Experiences */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           <h2 className="col-span-full text-2xl font-semibold text-foreground mb-4">
             Available AR Experiences
           </h2>
@@ -295,7 +295,7 @@ const ARExperiences = () => {
               </div>
             </card>
           ))}
-        </div>
+        </div> */}
 
         
       </div>
