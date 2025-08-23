@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
+import { useRouter } from "next/navigation"; 
 
 // Background images (place these in /public folder for Next.js!)
 const bgimages = [
@@ -14,6 +15,7 @@ const bgimages = [
 export default function HomePage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const router = useRouter();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -37,7 +39,9 @@ export default function HomePage() {
 
             {/* Desktop Button */}
             <div className="hidden md:block">
-              <button className="bg-green-700 hover:bg-green-800 text-white px-6 py-2 rounded-full transition-colors duration-200 font-medium">
+              <button 
+               onClick={() => router.push("/auth")}
+              className="bg-green-700 hover:bg-green-800 text-white px-6 py-2 rounded-full transition-colors duration-200 font-medium">
                 Sign In
               </button>
             </div>
@@ -57,7 +61,9 @@ export default function HomePage() {
           {isMenuOpen && (
             <div className="md:hidden">
               <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-green-100">
-                <button className="block w-full text-left bg-green-700 hover:bg-green-800 text-white px-4 py-2 rounded-full transition-colors duration-200 font-medium">
+                <button 
+                onClick={() => router.push("/auth")}
+                className="block w-full text-left bg-green-700 hover:bg-green-800 text-white px-4 py-2 rounded-full transition-colors duration-200 font-medium">
                   Sign In
                 </button>
               </div>
