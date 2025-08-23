@@ -1,7 +1,7 @@
 "use client"
 import React, { useRef, useEffect, useState } from 'react';
 import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 // Model configurations for the three dance forms
 const MODEL_CONFIGS = [
