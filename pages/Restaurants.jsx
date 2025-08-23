@@ -389,8 +389,8 @@ userLng = 76.6193309;
       <div className="container mx-auto px-4 py-8 max-w-7xl">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Kerala Restaurant Finder
+          <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-4">
+          Taste of Kerala
           </h1>
           <p className="text-gray-600 max-w-2xl mx-auto text-lg">
             Discover authentic Kerala restaurants near you. Search by location to find traditional Malayali cuisine.
@@ -398,10 +398,10 @@ userLng = 76.6193309;
         </div>
 
         {/* Search Bars */}
-        <div className="max-w-2xl mx-auto mb-8 space-y-4">
+        <div className="max-w-2xl mx-auto mb-8 sm:mb-12 lg:mb-16 space-y-4">
           <div>
             {/* Location Search */}
-            <div className="relative mb-4">
+            <div className="relative mb-4 ">
               <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
               <input
                 type="text"
@@ -415,7 +415,7 @@ userLng = 76.6193309;
             
             <button
               onClick={handleSearch}
-              className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 shadow-sm hover:shadow-md"
+              className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200  shadow-sm hover:shadow-md"
             >
               Search Kerala Restaurants
             </button>
