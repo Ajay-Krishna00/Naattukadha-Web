@@ -41,7 +41,7 @@ const App = () => {
           {/* App Title Section */}
           <div className="text-center mb-12">
             <h1 className="text-5xl font-bold text-green-800 mb-3">Naattukadha</h1>
-            <p className="text-xl text-green-600 font-light">Stories alive, through every lens</p>
+            <p className="text-xl text-green-600 font-light">Stories alive, through your lens</p>
           </div>
           
           {/* 3D Models Container */}

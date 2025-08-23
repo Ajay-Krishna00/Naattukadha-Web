@@ -55,7 +55,7 @@ const navItems = [
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
 
-<Link href="/" className="flex items-center gap-2">
+<div className="flex items-center gap-2">
   <Image
     src="/logonaatu.jpeg"  
     alt="Nattukaadha Logo"
@@ -66,7 +66,7 @@ const navItems = [
   <span className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent hover:from-green-700 hover:to-emerald-700 transition-all duration-200">
     Nattukaadha AR
   </span>
-</Link>
+</div>
 
 
           {/* Desktop Navigation */}
