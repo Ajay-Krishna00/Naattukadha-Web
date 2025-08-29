@@ -94,8 +94,8 @@ const getRarityColor = (rarity) => {
 
 export default function ProfilePage() {
   const [user] = useState({
-    name: "Ajay Krishna",
-    email: "ajaykrishna@gmail.com",
+    name: "Keira Madeline Victor",
+    email: "keira@example.com",
     avatar: "/avatar.png",
     joinDate: "August 2025",
     totalStamps: stampsData.filter(s => s.unlocked).length,

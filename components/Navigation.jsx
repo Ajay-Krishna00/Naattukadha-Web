@@ -1,5 +1,5 @@
 "use client";
-
+import Image from "next/image";
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -40,24 +40,34 @@ const Navigation = () => {
   
   const isActive = (path) => pathname === path;
 
-  const navItems = [
-    { path: "/ar", label: "AR Experiences", icon: Camera },
-    { path: "/restaurants", label: "Restaurants", icon: MapPin },
-    { path: "/music", label: "Folk Music", icon: Music },
-    { path: "/profile", label: "Profile", icon: User },
-  ];
+const navItems = [
+  { path: "/ar", label: "AR Experiences", icon: Camera },
+  { path: "/auth", label: "Auth", icon: Camera, hidden: true },
+  { path: "/restaurants", label: "Restaurants", icon: MapPin },
+  { path: "/music", label: "Folk Music", icon: Music },
+  { path: "/profile", label: "Profile", icon: User },
+].filter(item => !item.hidden);
+
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/70 backdrop-blur-xl border-b border-green-200 shadow-lg">
       <div className="container mx-auto px-4 sm:px-6 max-w-7xl">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link
-            href="/"
-            className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent hover:from-green-700 hover:to-emerald-700 transition-all duration-200"
-          >
-            Nattukaadha AR
-          </Link>
+
+<div className="flex items-center gap-2">
+  <Image
+    src="/logonaatu.jpeg"  
+    alt="Nattukaadha Logo"
+    width={40}
+    height={40}
+    className="rounded-lg"
+  />
+  <span className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent hover:from-green-700 hover:to-emerald-700 transition-all duration-200">
+    Nattukaadha AR
+  </span>
+</div>
+
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-2">

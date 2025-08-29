@@ -1,5 +1,5 @@
 "use client";
-
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { useRouter } from "next/navigation"; 
@@ -29,14 +29,21 @@ export default function HomePage() {
       {/* Navigation */}
       <nav className="relative bg-white/90 backdrop-blur-md shadow-sm border-b border-green-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+          <div className="flex justify-between items-center h-22">
             {/* Logo */}
-            <div className="flex-shrink-0">
-              <h1 className="text-xl font-bold text-green-800 tracking-wide">
-                NATTUKADHA AR
-              </h1>
-            </div>
-
+        <div className="flex-shrink-0 flex items-center gap-2">
+  {/* Logo Image */}
+  <Image
+    src="/logonaatu.jpeg"  
+    alt="Nattukadha AR Logo"
+    width={40}
+    height={40}
+    className="rounded-md"
+  />
+  <h1 className="text-xl font-bold text-green-800 tracking-wide">
+    NAATTUKADHA AR
+  </h1>
+</div>
             {/* Desktop Button */}
             <div className="hidden md:block">
               <button 
@@ -84,11 +91,11 @@ export default function HomePage() {
             {/* Text Content */}
             <div className="space-y-8">
               <div className="space-y-6">
-                <h2 className="text-4xl lg:text-6xl font-bold text-green-900 leading-tight">
+                <h2 className="text-4xl lg:text-7xl font-bold text-green-900 leading-tight">
                   Discover Kerala&apos;s
                   <span className="block text-green-700">Cultural Heritage</span>
                 </h2>
-                <p className="text-lg text-gray-700 leading-relaxed max-w-xl">
+                <p className="text-xl text-gray-700 leading-relaxed max-w-xl">
                   Experience the rich traditions, taste authentic flavors, and
                   listen to timeless melodies of God&apos;s Own Country through
                   immersive AR and curated content.
