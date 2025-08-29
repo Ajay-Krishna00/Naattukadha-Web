@@ -7,6 +7,11 @@ import Navigation from "../components/Navigation";
 import { usePathname } from "next/navigation";
 import "./globals.css";
 
+// export const metadata = {
+//   title: "Naattukadha AR",
+//   description: "Stories Alive, Through your lens",
+// };
+
 export default function RootLayout({ children }) {
   const pathname = usePathname();
 

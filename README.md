@@ -4,7 +4,7 @@
 
 Naatukadha AR is a web platform dedicated to preserving, reviving, and refreshing the rich cultural heritage of Kerala. Built with modern web technologies, the platform brings the essence of Kerala—its music, cuisine, and traditions—closer to everyone, anywhere.
 
-> ⚠️ Note: Originally, we started an AR version using [Viro React](https://github.com/Ajay-Krishna00/Naattukadha_AR), which is compatible only with specific versions of React Native. Certain features like folk song downloads and dynamic restaurant searches weren’t feasible in AR, so we developed this web version to include them.
+> ⚠️ Note: Originally, we started an AR version using [Viro React](https://github.com/Ajay-Krishna00/Nattukadha-AR), which is compatible only with specific versions of React Native. Certain features like folk song downloads and dynamic restaurant searches weren’t feasible in AR, so we developed this web version to include them.
 
 ---
 
@@ -41,7 +41,7 @@ Naatukadha AR is a web platform dedicated to preserving, reviving, and refreshin
 ## 🔗 Repositories
 
 - **Web Version (this project):** [Naattukadha-Web](https://github.com/NiranjanaAjay/Naattukadha-Web)  
-- **AR Version:** [Naattukadha_AR](https://github.com/Ajay-Krishna00/Naattukadha_AR)  
+- **AR Version:** [Naattukadha_AR](https://github.com/Ajay-Krishna00/Nattukadha-AR)  
 
 ---
 
@@ -50,3 +50,16 @@ Naatukadha AR is a web platform dedicated to preserving, reviving, and refreshin
 1. Clone the repository:
 ```bash
 git clone https://github.com/NiranjanaAjay/Naattukadha-Web.git
+```
+2. Install Dependencies
+```bash
+npm i
+```
+3. Run Dev Environment
+```bash
+npm run dev
+```
+
+---
+
+#### Made with ❤️ by [Niranjana Ajay](https://github.com/NiranjanaAjay), [Pallavi Madhu](https://github.com/Pallavi-Madhu), [V Kirubha](https://github.com/3-stardust-7) & [Ajay Krishna D](https://github.com/Ajay-Krishna00/)
